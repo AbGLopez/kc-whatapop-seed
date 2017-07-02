@@ -48,13 +48,6 @@ export class ProductService {
     |       state=x (siendo x el estado)                               |
     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-      // text ?: string;
-      // category ?: string;
-      // state ?: string;
-      // priceMin ?: string;
-      // priceMax ?: string;
-      // order ?: string;
-      // name ?: string;
     let filtro: any;
     let domain: any;
     console.log(filter);
@@ -65,35 +58,11 @@ export class ProductService {
         params.set('category.id', filter.category);
       }
       params.set('state', filter.state);
-
-      // if (filter.priceMin && filter.priceMin != null && filter.priceMax === '') {
-      //     params.set('price_gte', `${filter.priceMin}`);
-      //     params.set('_order', 'ASC');
-      //     params.set('_sort', 'price');
-      // }
-
-      // if (filter.priceMax && filter.priceMax != null && filter.priceMin === '') {
-      //     params.set('price_lte', `${filter.priceMax}`);
-      //     params.set('_order', 'ASC');
-      //     params.set('_sort', 'price');
-      // }
-
-      // if (filter.priceMax && filter.priceMax != null && filter.priceMin && filter.priceMin != null) {
-      //     params.set('price_gte', `${filter.priceMin}`);
-      //     params.set('price_lte', `${filter.priceMax}`);
-      //     params.set('_order', 'ASC');
-      //     params.set('_sort', 'price');
-      // }
-
-      // if (filter.order && filter.order != null) {
-      //     params.set('_order', 'ASC');
-      //     params.set('_sort', filter.order);
-      // }
     }
 
     let options = new RequestOptions();
     options.search = params;
-    console.log('aa', options)
+    console.log('aa', options);
     params.set('_order', 'DESC');
     params.set('_sort', 'publishedDate');
     return this._http

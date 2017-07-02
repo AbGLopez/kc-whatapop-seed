@@ -21,6 +21,8 @@ import { SoldProductsResolveService } from './sold-products-resolve.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserService } from './user.service';
 import { DatePipe } from './publication-date.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 | Blue Path                                                        |
@@ -45,7 +47,9 @@ import { DatePipe } from './publication-date.pipe';
     FormsModule,
     HttpModule,
     ConfirmDialogModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
+
   ],
   providers: [
     BackendUriProvider,

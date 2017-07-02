@@ -25,10 +25,11 @@ export class SoldProductsResolveService implements Resolve<Product[]> {
         |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     constructor(private _productService: ProductService){}
 
-    resolve(route: ActivatedRouteSnapshot): Observable < Product[] > {
+    resolve(route: ActivatedRouteSnapshot): Observable <Product[]> {
             let filter: ProductFilter={
                 state: "sold"
             }
+
             return this._productService.getProducts(filter);
         }
     }
