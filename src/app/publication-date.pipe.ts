@@ -1,6 +1,17 @@
 import * as moment from 'moment';
 import 'moment/locale/es';
 
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+    name: "DatePipe"
+})
+
+export class DatePipe implements PipeTransform{
+    transform(fecha:number): string{
+        return moment(fecha).fromNow();
+    }
+}
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
 | Blue Path                                                        |
 |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|

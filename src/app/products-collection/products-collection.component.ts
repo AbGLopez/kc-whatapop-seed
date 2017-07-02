@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/switchMap';
+import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
+
 
 import { Product } from '../product';
 import { ProductFilter } from '../product-filter';
@@ -16,13 +19,15 @@ export class ProductsCollectionComponent implements OnDestroy, OnInit {
   products: Product[];
   private _filterStream$: Subject<ProductFilter> = new Subject;
 
-  constructor(private _productService: ProductService) { }
+  constructor(private _productService: ProductService,
+              private _router: Router) { }
 
   ngOnInit(): void {
     this._filterStream$
       .switchMap((filter: ProductFilter) => this._productService.getProducts(filter))
       .subscribe((products: Product[]) => this.products = products);
     this.filterCollection(null);
+    console.log('pasa por la coleccion');
   }
 
   ngOnDestroy(): void {
@@ -32,6 +37,21 @@ export class ProductsCollectionComponent implements OnDestroy, OnInit {
   filterCollection(filter: ProductFilter): void {
     this._filterStream$.next(filter);
   }
+
+
+  goProductTemplate(data: Product): void {
+      this._router.navigate(['/products/', data.id]);
+  }
+  // manegador del contacto
+  // clickContacto(product: Product): void {
+  //     this._productDetailsResolveService
+  //     // .getProduct(product)
+  //     // .subscribe(() => {
+  //     console.log('funciona algooo');
+  //     this._router.navigate(['/products/:productId']);
+  //     // });
+  // }
+
 
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
   | Green Path                                                       |

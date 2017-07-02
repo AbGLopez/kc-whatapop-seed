@@ -17,11 +17,12 @@
   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
   <button
-    class="button expanded"
+    (click)="onProduct(data)"
+      class="button expanded"
     [class.success]="data.state === 'selling'"
     [class.secondary]="data.state === 'sold'">
       <span *ngIf="data.state === 'selling'">
-        Comprar por {{ data.price }} €
+        Comprar por {{ data.price | number: '1.2-2'}} €
       </span>
       <span *ngIf="data.state === 'sold'">
         Ver detalles

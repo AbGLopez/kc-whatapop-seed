@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions, URLSearchParams } from '@angular/http';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
@@ -15,7 +16,7 @@ export class ProductService {
     @Inject(BackendUri) private _backendUri) { }
 
   getProducts(filter: ProductFilter = undefined): Observable<Product[]> {
-
+      let params = new URLSearchParams();
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     | Pink Path                                                        |
     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
@@ -28,9 +29,8 @@ export class ProductService {
     |                                                                  |
     |   _sort=publishedDate&_order=DESC                                |
     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
     /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-    | Red Path                                                         |
+    | Red y yellow Path                                                         |
     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
     | Pide al servidor que te retorne los productos filtrados por      |
     | texto y/ por categoría.                                          |
@@ -43,24 +43,61 @@ export class ProductService {
     |       q=x (siendo x el texto)                                    |
     |   - Búsqueda por categoría:                                      |
     |       category.id=x (siendo x el identificador de la categoría)  |
-    |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-    /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-    | Yellow Path                                                      |
-    |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-    | Pide al servidor que te retorne los productos filtrados por      |
-    | estado.                                                          |
-    |                                                                  |
-    | En la documentación de 'JSON Server' tienes detallado cómo       |
-    | filtrar datos en tus peticiones, pero te ayudo igualmente. La    |
-    | querystring debe tener estos parámetros:                         |
     |                                                                  |
     |   - Búsqueda por estado:                                         |
     |       state=x (siendo x el estado)                               |
     |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+      // text ?: string;
+      // category ?: string;
+      // state ?: string;
+      // priceMin ?: string;
+      // priceMax ?: string;
+      // order ?: string;
+      // name ?: string;
+    let filtro: any;
+    let domain: any;
+    console.log(filter);
+
+    if (filter) {
+      params.set('q', filter.text);
+      if ((filter.category != "0") && (filter.category !== null)) {
+        params.set('category.id', filter.category);
+      }
+      params.set('state', filter.state);
+
+      // if (filter.priceMin && filter.priceMin != null && filter.priceMax === '') {
+      //     params.set('price_gte', `${filter.priceMin}`);
+      //     params.set('_order', 'ASC');
+      //     params.set('_sort', 'price');
+      // }
+
+      // if (filter.priceMax && filter.priceMax != null && filter.priceMin === '') {
+      //     params.set('price_lte', `${filter.priceMax}`);
+      //     params.set('_order', 'ASC');
+      //     params.set('_sort', 'price');
+      // }
+
+      // if (filter.priceMax && filter.priceMax != null && filter.priceMin && filter.priceMin != null) {
+      //     params.set('price_gte', `${filter.priceMin}`);
+      //     params.set('price_lte', `${filter.priceMax}`);
+      //     params.set('_order', 'ASC');
+      //     params.set('_sort', 'price');
+      // }
+
+      // if (filter.order && filter.order != null) {
+      //     params.set('_order', 'ASC');
+      //     params.set('_sort', filter.order);
+      // }
+    }
+
+    let options = new RequestOptions();
+    options.search = params;
+    console.log('aa', options)
+    params.set('_order', 'DESC');
+    params.set('_sort', 'publishedDate');
     return this._http
-      .get(`${this._backendUri}/products`)
+      .get(`${this._backendUri}/products`, options)
       .map((data: Response): Product[] => Product.fromJsonToList(data.json()));
   }
 

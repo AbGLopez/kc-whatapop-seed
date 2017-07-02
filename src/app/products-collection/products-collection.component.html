@@ -4,17 +4,11 @@
   </div>
   <div *ngIf="products?.length > 0" class="small-up-2 medium-up-4 large-up-6">
 
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-    | Green Path                                                       |
-    |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-    | Suscribe el componente ProductComponent al evento que hayas      |
-    | definido en él para notificar los clics sobre los productos.     |
-    |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
     <app-product
       *ngFor="let product of products"
       [data]="product"
-      class="column">
+      class="column"
+      (clickProduct)="goProductTemplate($event)">
     </app-product>
   </div>
   <div *ngIf="products?.length === 0" class="text-center">
@@ -22,12 +16,5 @@
   </div>
 </div>
 <div class="text-center">
-
-  <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-  | Yellow Path                                                      |
-  |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-  | Modifica el elemento <a> para que navegue a la ruta  '/reset'.   |
-  |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
-  <a>Reset de productos</a>
+  <a routerLink="/reset">Reset de productos</a>
 </div>

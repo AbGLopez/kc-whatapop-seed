@@ -1,16 +1,25 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Product } from '../product';
+import { ProductDetailsResolveService } from '../product-details-resolve.service';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
+
 export class ProductComponent {
 
   @Input() data: Product;
 
+  @Output() clickProduct = new EventEmitter<Product>();
+
+
+  onProduct(data: Product): void{
+    this.clickProduct.emit(data);
+  }
   /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
   | Green Path                                                       |
   |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
